@@ -64,10 +64,16 @@ public class DaFarePostHandler implements HttpHandler {
             }
             
             // Chiama la logica di calcolo DA FARE
-           
+           Boolean risultato = DaFareService.calcolaVincita(
+                request.getGiocata(),
+                request.getNumero().toString()
+            );
             
             // Crea l'oggetto risposta DA FARE
            DaFareResponse response = new DaFareResponse(
+                   request.getGiocata(),
+                   request.getGiocata(),
+                   risultato
             );
             
             // GSON converte automaticamente l'oggetto Java in JSON
