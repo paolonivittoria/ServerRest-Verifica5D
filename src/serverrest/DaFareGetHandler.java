@@ -20,7 +20,7 @@ import java.util.Map;
 
 /**
  *
- * @author delfo
+ * @author paolonivittoria
  */
 
 
@@ -47,18 +47,22 @@ public class DaFareGetHandler implements HttpHandler {
             // Validazione parametri
             if (validazioneParametri(parametri)) {
                 inviaErrore(exchange, 400, 
-                    "Parametri mancanti. Necessari: operando1, operando2, operatore");
+                    "Parametri mancanti. Necessari: giocata, numero");
                 return;
             }
             
             // Parsing dei valori
-            
+            String giocata = parametri.get("giocata");
+            String numero = (parametri.get("numero"));
             
             // Esegue la logica di calcolo
-            double risultato = DaFareService.logicaDiCalcolo();
+            Boolean risultato = DaFareService.calcolaVincita(giocata, numero);
             
             // Crea l'oggetto risposta
             DaFareResponse response = new DaFareResponse(
+                    giocata,
+                    numero,
+                    risultato
             );
             
             // GSON converte automaticamente l'oggetto Java in JSON
@@ -67,7 +71,7 @@ public class DaFareGetHandler implements HttpHandler {
             inviaRisposta(exchange, 200, jsonRisposta);
             
         } catch (NumberFormatException e) {
-            inviaErrore(exchange, 400, "Operandi non validi. Devono essere numeri");
+            inviaErrore(exchange, 400, "Valori non validi.");
         } catch (IllegalArgumentException e) {
             inviaErrore(exchange, 400, e.getMessage());
         } catch (Exception e) {

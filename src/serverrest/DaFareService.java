@@ -9,48 +9,37 @@ package serverrest;
  * @author delfo
  */
 public class DaFareService {
-    
-    /**
-     * Esegue l'operazione matematica richiesta
-     * 
-     * @param giocata
-     * @param numero
-     * @param vittoria
-     * @return 
-     * @throws IllegalArgumentException se ...
-     */
-    private final String giocata;
-    private final Integer numero;
-    private final Boolean vittoria;
-
-    public DaFareService(String giocata, Integer numero, Boolean vittoria) {
-        this.giocata = giocata;
-        this.numero = numero;
-        this.vittoria = vittoria;
-    }
-    
-    
-    public static double logicaDiCalcolo() 
+    public static Boolean calcolaVincita(String g, String n) 
             throws IllegalArgumentException {
-        
+        Integer numConvertito= Integer.parseInt(n);
         // Controllo se i parametri passati sono validi
-                if (!parametriValidi()) {
-                    
-            throw new IllegalArgumentException("Operatore non può essere vuoto");
+                if (!parametriValidi(g, numConvertito)) {        
+            throw new IllegalArgumentException("I parametri non possono essere vuoti");
         }
         
-        try {
-            
-        } catch (Exception e) {
-            throw new IllegalArgumentException(
-                    "Opzione non valida. Opzione deve essere DA FARE");
+        String giocata = g.toUpperCase().trim();
+        Boolean vittoria=false;
+        switch(giocata){
+                case "DISPARI":
+                    if(numConvertito==0){
+                       vittoria=false; 
+                    }else{
+                        vittoria = numConvertito%2 != 0;
+                    }
+                case "PARI":
+                    if(numConvertito==0){
+                       vittoria=false; 
+                    }else{
+                        vittoria = numConvertito%2 == 0;
+                    }
+        
         }
-        return 0; // Placeholder, da sostituire con il risultato della logica di calcolo
+        return vittoria; // Placeholder, da sostituire con il risultato della logica di calcolo
     }
 
     // Metodo di validazione dei parametri (da implementare)
-    private static boolean parametriValidi()
+    public static boolean parametriValidi(String g, Integer n)
     {
-        return false;
+        return (n>36||n<0||g.equals("")||n==null);
     }
 }
