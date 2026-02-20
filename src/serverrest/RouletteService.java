@@ -8,7 +8,7 @@ package serverrest;
  *
  * @author delfo
  */
-public class DaFareService {
+public class RouletteService {
     public static Boolean calcolaVincita(String g, String n) 
             throws IllegalArgumentException {
         Integer numConvertito= Integer.parseInt(n);
