@@ -34,7 +34,7 @@ public class ServerRest {
             HttpServer server = HttpServer.create(new InetSocketAddress(porta), 0);
             
             // Registra gli handler per gli endpoint
-           server.createContext("/api/roulette/paridispari/post", new RoulettePostHandler());
+            server.createContext("/api/roulette/paridispari/post", new RoulettePostHandler());
             server.createContext("/api/roulette/paridispari/get", new RouletteGetHandler());
             
             // Endpoint di benvenuto
@@ -55,7 +55,6 @@ public class ServerRest {
             System.out.println("  - GET:  http://localhost:" + porta + "/api/roulette/paridispari/get");
             System.out.println("  - Info: http://localhost:" + porta + "/");
             System.out.println();
-            System.out.println();
             System.out.println("Premi Ctrl+C per fermare il server");
             System.out.println("==============================================");
             
@@ -74,20 +73,22 @@ public class ServerRest {
     private static void gestisciBenvenuto(HttpExchange exchange) throws IOException {
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
         
-        Map info = new HashMap<>();
+        Map<String, Object> info = new HashMap<>();
         info.put("messaggio", "Benvenuto alla Roulette REST API");
         info.put("versione", "2.0.0");
         info.put("tecnologia", "Java + GSON");
         
-        Map endpoints = new HashMap<>();
-        endpoints.put("POST", "/api/calcola/post");
-        endpoints.put("GET", "/api/calcola/get?numero=X&giocata=GIO");
+        Map<String, String> endpoints = new HashMap<>();
+        endpoints.put("POST", "/api/roulette/paridispari/post");
+        endpoints.put("GET", "/api/roulette/paridispari/get?numero=X&giocata=GIO");
         info.put("endpoints", endpoints);
         
         Map tipoGiocata = new HashMap<>();
         tipoGiocata.put("giocata", "PARI");
         tipoGiocata.put("giocata", "DISPARI");
         info.put("tipiGiocata_supportati", tipoGiocata);
+        
+        info.put("tipiGiocata_supportati", new String[]{"PARI", "DISPARI"}); 
         
         String jsonRisposta = gson.toJson(info);
         

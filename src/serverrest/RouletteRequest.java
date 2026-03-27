@@ -43,6 +43,6 @@ public class RouletteRequest {
     // ToString
     @Override
     public String toString() {
-        return "DaFareRequest" + "giocata=" + giocata + ", numero=" + numero ;
+        return "RouletteRequest" + "giocata=" + giocata + ", numero=" + numero ;
     }
 }

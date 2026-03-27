@@ -59,7 +59,7 @@ public class RoulettePostHandler implements HttpHandler {
             }
             
             if (validazioneParametri(request)) {
-                inviaErrore(exchange, 400, "Operatore mancante o vuoto");
+                inviaErrore(exchange, 400, "Parametri mancanti. Necessari: giocata, numero");
                 return;
             }
             
@@ -72,7 +72,7 @@ public class RoulettePostHandler implements HttpHandler {
             // Crea l'oggetto risposta DA FARE
            RouletteResponse response = new RouletteResponse(
                    request.getGiocata(),
-                   request.getGiocata(),
+                   request.getNumero().toString(),
                    risultato
             );
             
@@ -92,7 +92,10 @@ public class RoulettePostHandler implements HttpHandler {
     
     // Validazione dei parametri (da implementare)
     private boolean validazioneParametri(RouletteRequest request) {
-        
+         if (request == null) return true;
+
+        if (request.getGiocata() == null || request.getGiocata().trim().isEmpty()) return true;
+        if (request.getNumero() == null) return true;
         return false;
     }
 

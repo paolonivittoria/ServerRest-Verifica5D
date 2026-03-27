@@ -82,6 +82,13 @@ public class RouletteGetHandler implements HttpHandler {
     // Validazione dei parametri (da implementare)
     private boolean validazioneParametri(Map<String, String> parametri) {
         
+        if (parametri == null) return true;
+
+        String giocata = parametri.get("giocata");
+        String numero  = parametri.get("numero");
+
+        if (giocata == null || giocata.trim().isEmpty()) return true;
+        if (numero  == null || numero.trim().isEmpty())  return true;
         return false;
     }
     
