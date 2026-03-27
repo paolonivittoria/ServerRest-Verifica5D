@@ -18,21 +18,17 @@ public class RouletteService {
         }
         
         String giocata = g.toUpperCase().trim();
-        Boolean vittoria=false;
+        Boolean vittoria;
         switch(giocata){
                 case "DISPARI":
-                    if(numConvertito==0){
-                       vittoria=false; 
-                    }else{
-                        vittoria = numConvertito%2 != 0;
-                    }
+                    vittoria = (numConvertito != 0) && (numConvertito % 2 != 0);
+                    break;
                 case "PARI":
-                    if(numConvertito==0){
-                       vittoria=false; 
-                    }else{
-                        vittoria = numConvertito%2 == 0;
-                    }
-        
+                    vittoria = (numConvertito != 0) && (numConvertito % 2 == 0);
+                break;
+                
+                default:
+                throw new IllegalArgumentException("Giocata non valida: " + g);
         }
         return vittoria; // Placeholder, da sostituire con il risultato della logica di calcolo
     }
@@ -40,6 +36,14 @@ public class RouletteService {
     // Metodo di validazione dei parametri (da implementare)
     public static boolean parametriValidi(String g, Integer n)
     {
-        return (n>36||n<0||g.equals("")||n==null);
+        if (g == null || n == null) return false;
+
+        String giocata = g.trim();
+        if (giocata.isEmpty()) return false;
+
+        if (n < 0 || n > 36) return false;
+
+        String up = giocata.toUpperCase();
+        return up.equals("PARI") || up.equals("DISPARI");
     }
 }
